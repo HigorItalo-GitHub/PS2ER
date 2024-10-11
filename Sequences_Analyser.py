@@ -1,8 +1,5 @@
 import numpy as np
-# import pandas as pd
 import random
-# debug
-from timeit import default_timer as timer
 
 '''
 Nome: calc_probs
@@ -30,7 +27,6 @@ def calc_probs(X, L):
     probabilities = []
     alphabet = set([c for c in X])  # computa todos os diferentes caracteres na sequencia
     max_probs = {}
-    init_time = timer()
     for i in range(0, len(X) - (L + 1)):
         curr_word = ''.join(map(str, X[i:(i + (L + 1))]))
         if not curr_word in max_probs.keys():
