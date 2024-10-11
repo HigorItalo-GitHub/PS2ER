@@ -1,6 +1,5 @@
 import numpy as np
 # import pandas as pd
-from Sequence_Generator import logistic_map
 import random
 # debug
 from timeit import default_timer as timer
@@ -346,34 +345,3 @@ def calc_euclidian_distance(seq_probs, base_probs, K):
     print("Euclidian Distance calculated!")
     print("*****************")
     return euclidian_distance
-
-
-if __name__ == "__main__":
-    print("testando função")
-
-    lenght = 1000000
-    x = logistic_map(lenght)
-    l=8
-
-    dic_subSeqs_probs, alph = calc_probs(x,l)
-
-    # probs=[]
-    print("\nProbabilidades calculadas:")
-    for dsp in dic_subSeqs_probs:
-        # probs.append(dsp)
-        print("\n",dsp)
-
-    # for i in probs[21:22]:
-    #     print("\n",i.items())
-
-    print("\nalfabeto da sequencia analisada:")
-    print(alph)
-
-    cond_probs = calc_cond_probs(dic_subSeqs_probs, alph,l)
-
-    print(f"\nProbabilidade condicionais calculadas para L = {l}:")
-    for i in cond_probs:
-        print("\n",i)
-
-    ents = calc_cond_entropy(dic_subSeqs_probs,cond_probs,8)
-    # print(ents)
