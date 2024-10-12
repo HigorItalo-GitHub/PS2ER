@@ -1,4 +1,4 @@
-from Comparing_Morphs import calc_morphs_dists
+# from Comparing_Morphs import calc_morphs_dists
 
 
 def leafs_complementer(Folhas_Atual, Folhas, Alfabeto, probs_conds):
@@ -67,84 +67,84 @@ def leafs_complementer(Folhas_Atual, Folhas, Alfabeto, probs_conds):
     return Folhas  # RETORNA AS FOLHAS DEVIDAMENTE COMPLEMENTADAS
 
 
-def find_similar_conex(nodes, alf, probs_conds):
+# def find_similar_conex(nodes, alf, probs_conds):
 
-    to_add = []
-    to_remove = []
+#     to_add = []
+#     to_remove = []
 
-    for n in nodes:  # para cada folha no conjunto de folhas atualmente analisado...
+#     for n in nodes:  # para cada folha no conjunto de folhas atualmente analisado...
 
-        # pbs = cop[f]
+#         # pbs = cop[f]
 
-        print(F"\nANALISANDO CONTEXTO {n}:")
+#         print(F"\nANALISANDO CONTEXTO {n}:")
 
-        for letter in alf:  # ...tome cada uma das letras no alfabeto da sequencia...
+#         for letter in alf:  # ...tome cada uma das letras no alfabeto da sequencia...
 
-            next = n + letter  # ... e faça a contanação da folha com a letra à esquerda, criando o contexto 'next'.
+#             next = n + letter  # ... e faça a contanação da folha com a letra à esquerda, criando o contexto 'next'.
 
-            cont = 0  # variavel para realizar contabilização de não identificação de folhas como sufixo para 'next'
+#             cont = 0  # variavel para realizar contabilização de não identificação de folhas como sufixo para 'next'
 
-            for context in nodes:  # para cada um dos contextos(folhas) no conjunto original de folhas analisado
+#             for context in nodes:  # para cada um dos contextos(folhas) no conjunto original de folhas analisado
 
-                if next.endswith(context):  # se alguma folha é identificada como sufixo da concatenação 'next'
+#                 if next.endswith(context):  # se alguma folha é identificada como sufixo da concatenação 'next'
 
-                    # pass  # apenas indique a identificação
+#                     # pass  # apenas indique a identificação
 
-                    print(f"\nPALAVRA {next} --> FOLHA {context} IDENTIFICADA COMO SUFIXO PARA {next}")
+#                     print(f"\nPALAVRA {next} --> FOLHA {context} IDENTIFICADA COMO SUFIXO PARA {next}")
 
-                    suffix = context
+#                     suffix = context
 
-                else:  # caso não se identifique qualquer folha como sufixo para 'next'...
+#                 else:  # caso não se identifique qualquer folha como sufixo para 'next'...
 
-                    # print(f"Concatenação {next} não associada à folha ",element)
+#                     # print(f"Concatenação {next} não associada à folha ",element)
 
-                    cont += 1  # itere o contador
+#                     cont += 1  # itere o contador
 
-            d = calc_morphs_dists([next, suffix], alf, probs_conds)
+#             d = calc_morphs_dists([next, suffix], alf, probs_conds)
 
-            print(f"\n==========================================================="
-                  f"\nDistancia euclidiana entre morphs de {[next, suffix]}: {d}\n"
-                  f"===========================================================")
+#             print(f"\n==========================================================="
+#                   f"\nDistancia euclidiana entre morphs de {[next, suffix]}: {d}\n"
+#                   f"===========================================================")
 
-            if d >= 0.0605:
+#             if d >= 0.0605:
 
-                to_add.append(next)
+#                 to_add.append(next)
 
-                if next.endswith(suffix):
+#                 if next.endswith(suffix):
 
-                    if suffix not in to_remove:
+#                     if suffix not in to_remove:
 
-                        to_remove.append(suffix)
+#                         to_remove.append(suffix)
 
-    for obsolet_suffix in to_remove:
+#     for obsolet_suffix in to_remove:
 
-        nodes.remove(obsolet_suffix)
+#         nodes.remove(obsolet_suffix)
 
-    for relevant_context in to_add:
+#     for relevant_context in to_add:
 
-        nodes.append(relevant_context)
+#         nodes.append(relevant_context)
 
-    return nodes
+#     return nodes
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    import Sequences_Analyser
-    L = 35  # Limita o comprimento de palavras para calculos probabilisticos e spliting
+#     import Sequences_Analyser
+#     L = 35  # Limita o comprimento de palavras para calculos probabilisticos e spliting
 
-    """Leitura de Sequência para sistema MaFaulDa"""
-    with open('MaFaulDa_Normal_C3_12288_BIN.txt', 'r') as f:
-    # with open('MaFaulDa_Normal_12288-C3_TERN.txt', 'r') as f:
-        for linha in f:
-            sequencia = linha
-    sequence_lenght = len(sequencia)
+#     """Leitura de Sequência para sistema MaFaulDa"""
+#     with open('MaFaulDa_Normal_C3_12288_BIN.txt', 'r') as f:
+#     # with open('MaFaulDa_Normal_12288-C3_TERN.txt', 'r') as f:
+#         for linha in f:
+#             sequencia = linha
+#     sequence_lenght = len(sequencia)
 
-    """Calculos probabilisticos utilizados para obtenção das máquina D-markov"""
-    probabilidades, seq_alf = Sequences_Analyser.calc_probs(sequencia, L)
-    probabilidades_condicionais = Sequences_Analyser.calc_cond_probs(probabilidades, seq_alf, L)
+#     """Calculos probabilisticos utilizados para obtenção das máquina D-markov"""
+#     probabilidades, seq_alf = Sequences_Analyser.calc_probs(sequencia, L)
+#     probabilidades_condicionais = Sequences_Analyser.calc_cond_probs(probabilidades, seq_alf, L)
 
-    alfabeto_da_sequencia = sorted(seq_alf)  # organiza o alfabeto de simbolos da sequencia analisada
+#     alfabeto_da_sequencia = sorted(seq_alf)  # organiza o alfabeto de simbolos da sequencia analisada
 
-    conj_folhas = ['01', '00', '0010', '1010', '011', '110', '111']
+#     conj_folhas = ['01', '00', '0010', '1010', '011', '110', '111']
 
-    print(find_similar_conex(conj_folhas, alfabeto_da_sequencia, probabilidades_condicionais))
+#     print(find_similar_conex(conj_folhas, alfabeto_da_sequencia, probabilidades_condicionais))
