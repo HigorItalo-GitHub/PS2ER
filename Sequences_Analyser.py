@@ -2,30 +2,27 @@ import numpy as np
 import random
 
 '''
-Nome: calc_probs
-Entradas:
- * X: sequência a ser analisada
- * L: comprimento máximo da subseqüência a ser analisado.
-Saídas:
- * probabilities: uma lista de dicionários. Cada dicionário contém chaves que 
-    são sequências do mesmo tamanho. O valor associado a uma chave é uma 
-    probabilidade de que a subsequência apareça na sequência original
- * alphabet: os símbolos únicos que aparecem na sequência.
-Descrição:
-Verifica o número de ocorrências de subseqüências de comprimentos de 1 a L.
-Divide o número de ocorrências pelo comprimento da sequência para 
-    obter freqüências relativas. Cria um dicionário para subseqüências de 
-    cada tamanho. Ao verificar subseqüências de comprimento 1, o método registra cada 
-    símbolo individual que aparece e o armazena como o alfabeto da seqüência.
+Name: calc_probs
+Inputs:
+ * X: sequence to be analyzed
+ * L: maximum length of the subsequence to be analyzed.
+Outputs:
+ * probabilities: a list of dictionaries. Each dictionary contains 
+ keys that represent sequences of the same length. The value associated with 
+ a key is the probability that the subsequence appears in the original sequence.
+ * alphabet: the unique symbols that appear in the sequence.
+Description:  
+Checks the number of occurrences of subsequences with lengths from 1 to L.  
+Divides the number of occurrences by the length of the sequence to obtain relative frequencies.  
+Creates a dictionary for subsequences of each length. When checking subsequences of length 1, 
+the method records each individual symbol that appears and stores it as the alphabet of the sequence.  
 '''
-
-
 def calc_probs(X, L):
 
-    print("\n--- Executando cálculos de probabilidades ---\n")
+    print("\n--- Performing probability calculations ---\n")
 
     probabilities = []
-    alphabet = set([c for c in X])  # computa todos os diferentes caracteres na sequencia
+    alphabet = set([c for c in X])
     max_probs = {}
     for i in range(0, len(X) - (L + 1)):
         curr_word = ''.join(map(str, X[i:(i + (L + 1))]))
@@ -59,44 +56,44 @@ def calc_probs(X, L):
         max_probs = node_prob.copy()
     # print(f'took {timer()-init_time} secs')
 
-    print("Probabilidades calculadas!")
+    # print("calculated probabilities!")
     return [probabilities, alphabet]
 
 '''
-Nome: calc_cond_probs
-Entrada:
- * probabilities: lista de dicionários contendo todas as probabilidades de subseqüências em uma seqüência;
- * alphabet: conjunto de símbolos que aparecem em sub-seqüências de probabilidades;
- * L: comprimento máximo da subseqüência a ser analisado;
-Saída:
- * conditional_probabilities: uma lista de dicionários. Cada dicionário contém chaves que são da forma:
-                                        símbolo|subsequencia
- significando a probabilidade de "símbolo" ocorrer após essa subsequência.
- Existe um dicionário para cada tamanho de subsequência.
-Descrição:
- Calcula a probabilidade de cada símbolo no alfabeto ocorrer em cada subseqüência em probabilidades e 
-     cria um dicionário semelhante para essas probabilidades condicionais.
+Name: calc_cond_probs
+Inputs:
+ * probabilities: list of dictionaries containing all the probabilities of subsequences in a sequence;
+ * alphabet: set of symbols that appear in subsequences of probabilities;
+ * L: maximum length of the subsequence to be analyzed;
+Output:
+ * conditional_probabilities: a list of dictionaries. Each dictionary contains keys in the form:  
+                                        symbol|subsequence  
+  representing the probability of "symbol" occurring after that subsequence.  
+  There is a dictionary for each subsequence length.
+Description:  
+Calculates the probability of each symbol in the alphabet occurring in each subsequence in probabilities and  
+creates a similar dictionary for these conditional probabilities.
 '''
 
 
 def calc_cond_probs(probabilities, alphabet, L):
 
-    print("\n --- Executando cálculos de probabilidades condicionais ---")
+    print("\n --- Performing conditional probability calculations ---")
 
     # Saida inicializada como uma lista vazia:
     conditional_probabilities = []
-    print("\nCalculando probabilidades condicionais de subsequência...")
-    print("\nComprimento máximo da subsequência a ser analisado: L =", str(L))
+    print("\nCalculating conditional subsequence probabilities...")
+    # print("\nMaximum length of the subsequence to be analyzed: L =", str(L))
     print("")
     if probabilities:
-        # O primeiro elemento, isto é, as probabilidades de cada símbolo,
-        # dada a cadeia vazia, são apenas as probabilidades da ocorrência
-        # desses símbolos, isto é, o primeiro elemento da lista de probabilidades.
+        # The first element, that is, the probabilities of each symbol,
+        # given the empty string, are simply the probabilities of the occurrence
+        # of these symbols, which is the first element of the probabilities list.
         conditional_probabilities = [probabilities[0]]
-        # Este loop calcula as probabilidades condicionais de subsequancias de
-        # comprimento maior que 0 dado cada simbolo no alfabeto:
+        # This loop calculates the conditional probabilities of subsequences
+        # longer than 0 given each symbol in the alphabet:
         for l in range(0, L):
-            # print("Calculando probabilidades condicioanis de subsequencias de comprimento: " + str(l + 1))
+            # print("Calculating conditional probabilities of length subsequences: " + str(l + 1))
             d = {}
             l1 = probabilities[l]
             l2 = probabilities[l + 1]
@@ -110,22 +107,40 @@ def calc_cond_probs(probabilities, alphabet, L):
                         d[cond] = 0.0
             conditional_probabilities.append(d)
     else:
-        print("Probabilidades não calculadas.")
-        print("Execute a função calc_probs function primeiro antes de executar esta.")
-    print("*****************")
-    print("Probabilidades condicionais calculadas!")
-    print("*****************")
+        print("Uncalculated probabilities.")
+        print("Please, certify that calc_probs function be executed first before running this one.")
+    # print("*****************")
+    # print("conditional probability calculated!")
+    # print("*****************")
     return conditional_probabilities
+
+'''
+Name: calc_cond_entropy
+Input:
+    * probabilities: list of dictionaries containing probabilities for subsequences in a sequence
+    * conditional_probabilities: list of dictionaries containing conditional probabilities for subsequences in a sequence
+    * L: maximum length of subsequences to be analyzed
+     
+Output:
+    * cond_entropy: list of conditional entropy values for subsequences of each length from 1 to L
+     
+Description:
+    * Calculates the conditional entropy for subsequences of different lengths up to L.
+    For each subsequence length, computes the entropy based on the probabilities and conditional probabilities.
+    Uses the formula H(X|Y) = - Σ p(x) log2(p(x|y)) for conditional entropy.
+    If L = 1, the entropy is calculated using the unconditional probabilities of the symbols.
+    Stores and returns the entropy values for each subsequence length.
+'''
 
 
 def calc_cond_entropy(probabilities, conditional_probabilities, L):
     cond_entropy = []
-    print("Calculando entropia condicional para sequencias até: ")
-    print("L = " + str(L))
+    # print("Calculating conditional entropy for sequences up to: ")
+    # print("L = " + str(L))
     if probabilities:
         if conditional_probabilities:
             for l in range(0, L):
-                # l corresponde ao numero de bits condicionais. Assim, para um certo l fixo, podemos calcular h_{l+1}.
+                # l corresponds to the number of conditional bits. Thus, for a certain fixed l, we can calculate h_{l+1}.
                 # print("Sequence: ")
                 # print("Calculating conditional entropy of length: " + str(l+1))
                 acc = 0
@@ -148,14 +163,13 @@ def calc_cond_entropy(probabilities, conditional_probabilities, L):
                 cond_entropy.append(acc)
                 # print('\n')
         else:
-            print("Probabilidades condicionais não calculadas.")
-            print("Execute a função calc_cond_probs antes dessa.")
+            print("Uncalculated conditional probabilities.")
+            print("Please certify that calc_cond_probs function be executed first before running this one.")
     else:
-        print("Probabilidades não calculadas.")
-        print("Execute a função calc_probs function antes dessa.")
+        print("Uncalculated probabilities.")
+        print("Please certify that calc_probs function be executed first before running this one.")
     print("*****************")
-    #print("Sequencia: ")
-    print("Entropia condicional calculada!")
+    print("Conditional entropy calculada!")
     print("*****************")
     return cond_entropy
 
@@ -201,28 +215,6 @@ def calc_kldivergence(seq_probs, base_probs, K):
     print("*****************")
     return kldivergence
 
-
-def calc_kldivergence_vector(vec1, vec2):
-    kldivergence_pq = 0
-    kldivergence_qp = 0
-    print("Calculating Kullback-Leibler divergence")
-    if len(vec1) and len(vec1) == len(vec2):
-        #Probabilities of subsequences of length K are stored in probabilities[K-1]
-        for i in range(len(vec1)):
-            p = vec1[i] or 1e-15
-            q = vec2[i] or 1e-15
-            # print(f'p={p}, q={q}')
-            kldivergence_pq += p*np.log2(p/q)
-            kldivergence_qp += q*np.log2(q/p)
-
-            kldivergence_simetric = (kldivergence_pq + kldivergence_qp)/2
-    else:
-        print ("[error] Probabilities not computed.")
-    print("*****************")
-    print("Kullback-Leibler divergence calculated!")
-    print("*****************")
-    return kldivergence_simetric
-
 '''
 Nome: calc_occup_vector
 Entrada:
@@ -266,34 +258,47 @@ Descrição:
 #             return occup_vector
 #     return occup_vector
 
+'''
+Here is the translation into English:
 
+---
+*Name: calc_occup_vector  
+Inputs: 
+* machine**: group of states to be analyzed   
+* N: length of the subsequence from the sequence used in the analysis  
+
+Output:  
+* occup_vector**: empirically obtained occupation vector of the machine  
+
+*Description:  
+Calculates the machine's Occupation Vector by performing state transitions  
+based on states outedges. The number of visits per state is stored,  
+and then the occupation of each state is calculated.  
+'''
 def calc_occup_vector_V2(machine, N):
 
-    states = machine.states # recebe cada um dos esatdos da maquina
+    states = machine.states # receives each of the machine's states
 
-    curr_state = states[0] # aramazena o primeiro elemento do conjunto de estados da maquina
+    curr_state = states[0] # stores the first element of the set of machine states
 
-    idx = dict((s.name, states.index(s)) for s in states) # dicionario associando o nome do estado ao seu indice no conjunto de estados
+    idx = dict((s.name, states.index(s)) for s in states) # dictionary associating the name of the state with its index in the set of states
 
-    st_counter = np.zeros(len(states)) # cria uma lista de zeros na mesma quantidade de estados existentes
+    st_counter = np.zeros(len(states)) # creates a list of zeros in the same number of existing states
 
-    for i in range(int(N)): # para uma itereção de N vezes
+    for i in range(int(N)): # for an iteration of N times
 
         # Set data parameters
-        labels = [outedge[0] for outedge in curr_state.outedges] # armazenas as letras do alfabeto, contidas nos outedges
+        labels = [outedge[0] for outedge in curr_state.outedges] # stores the letters of the alphabet, contained in the outedges
 
-        probabilities = [outedge[-1] for outedge in curr_state.outedges] # armazenas a probabilidades de cada label
-        # Weight formatting
+        probabilities = [outedge[-1] for outedge in curr_state.outedges] # store the probabilities of each label
+        
+        probabilities = [int(p * 10e16) for p in probabilities] # Weight formatting: Multiplies the probabilities at the analyzed outedge by 10e16
 
-        probabilities = [int(p * 10e16) for p in probabilities] # multiplica por 10e16 as probabilidades no outedge analisado
-        # Chooses next state
+        label = random.choices(labels, probabilities)[0] # Chooses next state: randomly stores a label from the set of labels
 
-        label = random.choices(labels, probabilities)[0] # armazena aleatoriamente um label do conjunto de labels
-        # Goes to next state
+        next_state_name = curr_state.name + label # Goes to next state: stores the next state from the concatenation of the selected random label with the name of the current state
 
-        next_state_name = curr_state.name + label # armazena o estado seguinte a partir da concatenação do label aleatorio selecionado com o nome do estado atual
-        #print(f"concatenação: {next_state_name}")
-
+        # Search for the destination state with a label corresponding to the concatenation to define it as the current state in the occupation process
         while len(next_state_name) >= 1:
             if next_state_name in idx:
                 curr_state = states[idx[next_state_name]]
@@ -301,43 +306,14 @@ def calc_occup_vector_V2(machine, N):
             else:
                 next_state_name = next_state_name[1:]
 
-        st_counter[idx[curr_state.name]] += 1
-        #print(st_counter)
+        st_counter[idx[curr_state.name]] += 1    # Counts the visitation of the current state observed
 
-    occupation_vector = st_counter/st_counter.sum()
+    occupation_vector = st_counter/st_counter.sum()    # Calculates the occupancy of each state of the given machine, arranged in a vector
 
     occup_vect = {}
 
     for k1,v1 in idx.items():
 
-        occup_vect[k1] = occupation_vector[v1]
+        occup_vect[k1] = occupation_vector[v1]    # Dictionary containing the key (state label) and value (its occupancy calculation)
 
     return occup_vect
-
-
-def calc_euclidian_distance(seq_probs, base_probs, K):
-    euclidian_distance = 0
-    print('Calculating Euclidian Distance for sequence at: ')
-    print('K={}'.format(K))
-
-    if seq_probs:
-        # Probabilities of subsequences of length K are stored in probabilities[K-1]
-        for key in base_probs[K - 1].keys():
-            p = base_probs[K - 1][key]
-            if key in seq_probs[K - 1].keys():
-                q = seq_probs[K - 1][key]
-
-                if not q:
-                    q = 0
-            else:
-                q = 0  # Default non-zero really small value
-
-            euclidian_distance += abs(p - q)
-    else:
-        print("[error] Probabilities not computed.")
-        print("Run calc_probs function before this one.")
-    print("*****************")
-    print("Sequence test: ")
-    print("Euclidian Distance calculated!")
-    print("*****************")
-    return euclidian_distance
