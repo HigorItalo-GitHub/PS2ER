@@ -216,53 +216,10 @@ def calc_kldivergence(seq_probs, base_probs, K):
     return kldivergence
 
 '''
-Nome: calc_occup_vector
-Entrada:
- * machine: grupo de estados a serem analisados.
- * sequence: seqüência de símbolos usados nas transições de estados da máquina.
- * N: comprimento da subsequência da sequência usada na análise.
-Saída:
- * occup_vector: vetor de ocupação da máquina obtida empiricamente.
-Descrição:
- Calcula o Vetor de Ocupação da máquina executando transições de estado
- baseado em uma seqüência de símbolos. O número de visitações por estado é armazenado
- e depois é calculada a ocupação de cada estado.
- Atualmente suporta apenas labels de 1 tamanho.
-'''
-
-
-# def calc_occup_vector(machine, sequence, N):
-#     for i in range(len(machine.states)):
-#         states = machine.states
-#         st_counter = [0 for j in machine.states]
-#         st_index = i
-#         erro = 0
-#         for label in sequence[:N]:
-#             cur_st = states[st_index]
-#             cur_oedges = cur_st.outedges
-#             for oedge in cur_oedges:
-#                 if oedge[0] == label:
-#                     st_index = oedge[1]
-#                     break
-#                 # decide action if label doesn't exist in current state
-#             if not (oedge[0] == label):
-#                 erro += 1
-#                 st_index = cur_oedges[0][1]
-#             st_counter[st_index] += 1
-#         st_counter = np.array(st_counter)
-#         # print(erro)
-#         occup_vector = normalize(st_counter[:, np.newaxis], norm='l1', axis=0).ravel()
-#         # print(occup_vector)
-#         # print()
-#         if not erro:
-#             return occup_vector
-#     return occup_vector
-
-'''
 Here is the translation into English:
 
 ---
-*Name: calc_occup_vector  
+*Name: calc_occup_vector_v2  
 Inputs: 
 * machine**: group of states to be analyzed   
 * N: length of the subsequence from the sequence used in the analysis  
