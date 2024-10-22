@@ -173,22 +173,11 @@ if __name__ == "__main__":
 
     for N_max in N_leafs:
         while len(Gamma) < N_max:  #
-            # folhas, h = split_H(folhas, alfabeto_da_sequencia, probabilidades, probabilidades_condicionais); model_name = "S2ER"
             Gamma, h = split_H_depthed(Gamma, l_max, Sigma, probabilities, conditional_probabilities)
             model_name = "PS2ER"
 
-            # folhas = split_compair(folhas, alfabeto_da_sequencia, probabilidades_condicionais, 'euclid')
-
-            Gamma = Adjust_Contexts.leafs_complementer(Gamma, Gamma, Sigma,
-                                                       conditional_probabilities);
+            Gamma = Adjust_Contexts.leafs_complementer(Gamma, Gamma, Sigma, conditional_probabilities);
             model_name = "PS2ER"
-
-            # print("\n==> Folhas geradas após quebras por redução de entropia + quebras anti-strands:\n", folhas)
-
-            # if len(folhas) == len(alfabeto_da_sequencia) ** prof:
-            #     print(f"\n!_!_!_!_Número máximo de folhas possivel para alfabeto de ordem {len(alfabeto_da_sequencia)} e profundidade"
-            #           f" de arvore = {prof} atingido _!_!_!_!")
-            #     break
 
         used_states_vI, actual_machine_vI, n_states_vI, generated_sequence = \
             CT_Functions.new_sequence_generator_v2(
