@@ -7,9 +7,9 @@ import random
 
 
 def truncar(numero, casas_decimais=4):
-    """Função que recebe uma variavel float 'numero' e a
-    Trunca / preenche para n casas decimais sem arredondamento,
-    retornado o resultado do truncamento/preenchimento"""
+    """Function that receives a float variable 'number' and 
+    truncate/fills it to n decimal places without rounding, 
+    returning the result of the truncation/filling"""
 
     s = '{}'.format(numero)
 
