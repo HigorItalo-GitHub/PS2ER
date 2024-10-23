@@ -74,14 +74,14 @@ class ProbabilisticState(state.State):
     Name: randomstep
     Input:
     Output:
-        *A 2-tuple of the randomly chosen output symbol and the destination
+        *A tuple of the randomly chosen output symbol and the destination
          state.
     Description:
         Takes on step in a walk through the graph. It randomly generates a
         real number in [0,1] and compares it to the state's morph and chooses
         an output symbol and destination accordingly. If, by some error, the
         randomly generated number does not fall into the distribution, an error
-        2-tuple is returned.
+        tuple is returned.
     '''
     def random_step(self):
         dest = [x[:2] for x in self.outedges if float(x[2]) == 1.0]
