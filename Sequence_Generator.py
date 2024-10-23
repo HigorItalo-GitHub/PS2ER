@@ -6,7 +6,6 @@ import Sequences_Analyser as sa
 Name: generate_sequence
 Input:
     *machine: Machine from which the sequence will be created.
-    *D: memory of the machine.
     *L: sequence size.
 Output:
     *sequence: sequence with size L obtained from machine.
