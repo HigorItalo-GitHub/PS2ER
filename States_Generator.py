@@ -1,5 +1,7 @@
 from Probabilistic_State import ProbabilisticState
 
+"""Function used to manage the routine for creating data structures 
+corresponding to the states of the PFSA model to be generated."""
 def states_generator(states_data, probs_states_data):
 
     States = [] # list that stores each state with an object of the ProbalilisticState class
