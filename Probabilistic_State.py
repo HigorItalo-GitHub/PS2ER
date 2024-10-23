@@ -48,7 +48,7 @@ class ProbabilisticState(state.State):
     Output:
         *m: The state's morph, i.e. the probability distribution of its outputs.
     Description: Statistically comparing state's morphs will be used many times.
-    The morph is a 2-tuple with only the output letter and the probability that
+    The morph is a tuple with only the output letter and the probability that
     it occurs, disregarding the destination state.
     '''
     def morph(self):
