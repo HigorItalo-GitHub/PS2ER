@@ -14,7 +14,7 @@ def States_data_generator(actual_leafs, alf, probs_conds):
 
         # states=[]
 
-        # dic = {}  # armazena o dicionário final que contem os dados de cada outedge gerado
+        # dic = {}  # stores the final dictionary that contains the data for each generated edge
 
         # outs = []
 
@@ -26,9 +26,9 @@ def States_data_generator(actual_leafs, alf, probs_conds):
 
             # print(F"\nANALYSING q = {f}:")
 
-            for letra in Alphabet:  # ...take each of the symbols in the alphabet in the sequence...
+            for symbol in Alphabet:  # ...take each of the symbols in the alphabet in the sequence...
 
-                next = f + letra  # ... and contaminate the leaf with the symbol on the left, creating the 'next' context.
+                next = f + symbol  # ... and contaminate the leaf with the symbol on the left, creating the 'next' context.
 
                 cont = 0  # variable to account for non-identification of leafs as a suffix for 'next'
 
@@ -104,9 +104,9 @@ def States_data_generator(actual_leafs, alf, probs_conds):
 
             pbs = COP[l]  # ... we take the context and its outedges data present in the 'COP' data dictionary...
 
-            for letter in alphabet:  # ...and for each symbol of the alphabet in the sequence...
+            for symb in alphabet:  # ...and for each symbol of the alphabet in the sequence...
 
-                next = l + letter  # ...generate 'next' by connecting 'l' with 'letter' on the left...
+                next = l + symb  # ...generate 'next' by connecting 'l' with 'letter' on the left...
 
                 sufix = []
 
@@ -129,15 +129,15 @@ def States_data_generator(actual_leafs, alf, probs_conds):
 
                     max_ctx = sufix[lens.index(max(lens))] #  ...and take the element with the longest length.
 
-                    out_prob = pbs[letter+ "|" + l]  # take the conditional prob. of the context analyzed in this cycle...
+                    out_prob = pbs[symb+ "|" + l]  # take the conditional prob. of the context analyzed in this cycle...
 
                     if out_prob != 0:  #... and if not null...
-                        outs.append((letter, max_ctx, out_prob))  # ...it is used to compose the outedge tuple
+                        outs.append((symb, max_ctx, out_prob))  # ...it is used to compose the outedge tuple
 
                 else:  # if there is only one item in 'suffix', its data is taken to compose the tuple of its outedge.
-                    out_prob = pbs[letter + "|" + l]
+                    out_prob = pbs[symb + "|" + l]
                     if out_prob != 0:
-                        outs.append((letter, sufix[0], out_prob))
+                        outs.append((symb, sufix[0], out_prob))
 
 
             states_data[l] = outs  # 'states_data' is then populated with state 'l' and its 'outs' outedge tuples
