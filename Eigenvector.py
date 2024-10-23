@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.linalg import eig
 from sklearn.preprocessing import normalize
-import pickle
 
 
 def near(a, b, rtol=1e-5, atol=1e-8):
@@ -33,20 +32,3 @@ def occup_vector(machine):
     # except:
     #     normalized_occup = normalize(occup.real[:,np.newaxis], norm='l1', axis=0).ravel()
     return abs(normalized_occup)
-
-
-if __name__ == "__main__":
-
-    machine_archive = 'DFC_bin_MACHINE_DMK_D5.pkl'
-
-    with open(machine_archive, 'rb') as mach:
-        machine = pickle.load(mach)
-
-    ov = occup_vector(machine)
-
-    D_occup = {s.name: occup for s,occup in zip(machine.states, ov)}
-
-    print("Vetor de ocupações calculado:\n", ov)
-    print("\nOcupações de cada estado:")
-    for k, v in D_occup.items():
-        print(f"{k}:{round(v,5)}")
