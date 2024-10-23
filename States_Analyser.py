@@ -1,3 +1,5 @@
+"""This function was developed to check the occurrence of stranded states in a provided PFSA, 
+ensuring, if they are identified, that they are removed from the machine's set of states."""
 def states_analyser(Dic_states):
 
     # print("\n >>> RUNNING STRANDEDS STATE REMOVAL ROUTINE <<<")
@@ -8,10 +10,10 @@ def states_analyser(Dic_states):
 
     # the code snippet below stores the target states of each state present in 'Dic_states'
     for key_Dic, val_Dic in Dic_states.items():
-        sts.append(key_Dic)  # armazena o rotulo do estado
+        sts.append(key_Dic)  # stores the state label
         for i in range(len(Dic_states[key_Dic])):
             if Dic_states[key_Dic][i][1] not in destination_sts:
-                destination_sts.append(Dic_states[key_Dic][i][1])    # armazenas estados de destino em 'destination_sts'
+                destination_sts.append(Dic_states[key_Dic][i][1])    # stores destination states in 'destination_sts'
 
     # print(f"\ninitial States:                         {sts}")
 
