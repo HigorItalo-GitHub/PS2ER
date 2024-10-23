@@ -55,6 +55,6 @@ def leafs_complementer(Actual_Leafs, Leafs, Alphabet, probs_conds):
             Leafs.remove(ctx)
 
         # print("=================> REASSESSING LEAF SET AFTER INSECTIONS <=========================")
-        leafs_complementer(Leafs, Leafs, Alphabet, probs_conds)  # ...e reexecutando esta função.
+        leafs_complementer(Leafs, Leafs, Alphabet, probs_conds)  # ...and re-executing this function.
 
     return Leafs  # RETURN THE LEAVES SET PROPERLY COMPLETED
