@@ -89,6 +89,9 @@ if __name__ == "__main__":
     model_name = "PS2ER"    # label used do name some archive created
 
     for N_max in N_leafs:
+
+        print("\n========================== GENERATING NEW PFSA MODEL ===========================\n")
+        
         while len(Gamma) < N_max:   # Loop executed until the maximum number of leaves determined, 'N_max'
 
             """The call to the 'split_H_depthed' function at this point performs 
