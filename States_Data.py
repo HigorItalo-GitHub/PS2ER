@@ -152,7 +152,7 @@ def States_data_generator(actual_leafs, alf, probs_conds):
 
     sts_dt = generate_states_data(leafs_comp, alf, l_p_d)  # organizes context data in the form of machine states
 
-    usefull_states = states_analyser(sts_dt)  # refina os estados, removendo strandeds
+    usefull_states = states_analyser(sts_dt)  # refines the states, removing strandeds
 
     print("\n*-*-* STATE'S DATA CREATION ROUTINE COMPLETED! *-*-*")
 
