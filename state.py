@@ -16,4 +16,4 @@ class State:
         self.outedges = outedges    #List of outgoing edges
         self.state_prob = state_prob # Probability of the state in graph
         # An outgoing edge is a tuple composed of:
-        #    (label, destination state,)
+        #    (label, destination state, transition probability)
