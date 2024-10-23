@@ -195,7 +195,6 @@ class Graph:
         return reduced_graph
 
     def __str__(self):
-        # print("\nEstados gerados após aplicação de kmeans-moore:")
         print("\nGraphs's states:")
         for s in self.states:
             print(f'{s.name}: {s.outedges}')
