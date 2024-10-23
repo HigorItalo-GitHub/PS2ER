@@ -19,7 +19,7 @@ the method records each individual symbol that appears and stores it as the alph
 '''
 def calc_probs(X, L):
 
-    print("\n--- Performing probability calculations ---\n")
+    print("\n--- Performing probability calculations ---")
 
     probabilities = []
     alphabet = set([c for c in X])
@@ -82,7 +82,7 @@ def calc_cond_probs(probabilities, alphabet, L):
 
     # Saida inicializada como uma lista vazia:
     conditional_probabilities = []
-    print("\nCalculating conditional subsequence probabilities...")
+    # print("\nCalculating conditional subsequence probabilities...")
     # print("\nMaximum length of the subsequence to be analyzed: L =", str(L))
     print("")
     if probabilities:
@@ -169,7 +169,7 @@ def calc_cond_entropy(probabilities, conditional_probabilities, L):
         print("Uncalculated probabilities.")
         print("Please certify that calc_probs function be executed first before running this one.")
     print("*****************")
-    print("Conditional entropy calculada!")
+    print("Conditional entropy calculated!")
     print("*****************")
     return cond_entropy
 
@@ -191,8 +191,8 @@ Description:
 
 def calc_kldivergence(seq_probs, base_probs, K):
     kldivergence = 0
-    print("Calculating Kullback-Leibler divergence for sequence at: ")
-    print("K = " + str(K))
+    # print(f"\nCalculating Kullback-Leibler divergence for sequences of lenght L={K}...\n")
+    # print("K = " + str(K))
     if seq_probs:
         # Probabilities of subsequences of length K are stored in probabilities[K-1]
         for key in base_probs[K - 1].keys():
@@ -210,7 +210,6 @@ def calc_kldivergence(seq_probs, base_probs, K):
         print("[error] Probabilities not computed.")
         print("Run calc_probs function before this one.")
     print("*****************")
-    print("Sequence test: ")
     print("Kullback-Leibler divergence calculated!")
     print("*****************")
     return kldivergence
