@@ -1,5 +1,3 @@
-# import yaml
-import numpy as np
 import random
 import Sequences_Analyser as sa
 # from timeit import default_timer as timer
@@ -22,25 +20,25 @@ def generate_sequence(machine, L, label_size=1):
 
     sequence = ''
 
-    print("\n-*-*-*-*-*-* REALIZANDO ANÁLISE DE OCUPAÇÕES DE ESTADOS DO PFSA -*-*-*-*-*-*-*-*-*")
+    # print("\n-*-*-*-*-*-* PERFORMING OCCUPATION ANALYSIS OF PFSA STATES -*-*-*-*-*-*-*-*-*")
 
-    vetor_de_ocupacao = sa.calc_occup_vector_V2(machine, L)
+    occupation_vector = sa.calc_occup_vector_V2(machine, L)
 
-    print("\n##### Vetor de ocupação dos estados do PFSA: #####")
+    # print("\n##### PFSA states occupancy vector: #####")
 
     set_inital_state = False
 
     if set_inital_state:
-        for k, v in vetor_de_ocupacao.items():
+        for k, v in occupation_vector.items():
             print(f"'{k}': {v},")
             # if v == max(vetor_de_ocupacao.values()):
             #     curr_state_name = k
-        curr_state_name = random.choices([seq for seq in vetor_de_ocupacao.keys()], [occup for occup in vetor_de_ocupacao.values()])[0]
-        print("Estado inicial selecionado para geração da sequência experimental: ", curr_state_name)
+        curr_state_name = random.choices([seq for seq in occupation_vector.keys()], [occup for occup in occupation_vector.values()])[0]
+        # print("Initial state selected for generating the experimental sequence: ", curr_state_name)
     else:
         # Starts in machine's first state
         curr_state_name = machine.states[0].name
-        print("Estado inicial adotado para geração da sequência experimental: ", curr_state_name)
+        # print(f"Initial state selected for generating the experimental sequence: '{curr_state_name}'")
 
     for state in machine.states:
         if (state.name == curr_state_name):
@@ -71,7 +69,6 @@ def generate_sequence(machine, L, label_size=1):
 
     return sequence
 
-
 # thinking machine as a dict {state: outedge}
 def generate_sequence_dict(machine, L):
     sequence = ''
@@ -92,40 +89,3 @@ def generate_sequence_dict(machine, L):
         # Goes to next state
         curr_state_name = [oedge[1] for oedge in machine[curr_state_name] if oedge[0] == label[0]][0]
     return sequence
-
-
-def logistic_map(lenght, x0 = 0.5, r = 3.75):
-     x = [x0]
-     s = ''
-     for i in range(lenght):
-             x.append(r*x[i]*(1-x[i]))
-             if x[i] <= 0.67:
-                     s += '0'
-             elif x[i] <= 0.79:
-                     s += '1'
-             else:
-                     s += '2'
-     return s
-
-if __name__ == "__main__":
-
-    L = 10000000
-
-    s = logistic_map(L)
-
-    print("Sequencia gerada:")
-    print(f"{s[0:150]}...")
-    print("numero de caracteres na sequencia:",len(s))
-
-    #arq=open("sequence.txt","w")
-    #arq.write(s)
-    #arq.close()
-
-    #arq1=open("sequence.txt","r")
-    #arq.seek(0,0)
-    #print(arq1.read())
-    #print(arq1.tell())
-    # Gera um arquivo no formato YAML com a sequencia gerada
-
-    # with open('original_len_10000000.yaml', 'w') as f:
-    #     yaml.dump(s, f)
